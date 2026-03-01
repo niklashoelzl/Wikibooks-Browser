@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"Alle Packages","u":"allpackages-index.html"},{"m":"application.wikibooks_browser","l":"application.wikibooks_browser"}];updateSearchResults();

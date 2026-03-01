@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane fx:id="rootPane" minHeight="600" minWidth="850" prefHeight="720" prefWidth="1000" style="-fx-padding: 8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.wikibooks_browser.WikiBooksController">
+
+  <top>
+    <VBox spacing="8">
+      <MenuBar fx:id="menuBar">
+        <Menu fx:id="menuHelp" text="?">
+          <MenuItem fx:id="miAbout" onAction="#handleAbout" text="Über dieses Programm" />
+        </Menu>
+      </MenuBar>
+
+      <HBox alignment="CENTER_LEFT" spacing="8">
+        <Label text="Titel:" />
+        <TextField fx:id="tfSearchTerm" promptText="Buchtitel eingeben..." HBox.hgrow="ALWAYS">
+          <HBox.margin>
+            <Insets />
+          </HBox.margin></TextField>
+        <Button fx:id="btnSearch" onAction="#handleSearchButton" text="Suchen">
+          <HBox.margin>
+            <Insets />
+          </HBox.margin></Button>
+        <Button fx:id="btnShowLastChange" onAction="#handleShowLastChange" text="Letzte Änderung">
+          <HBox.margin>
+            <Insets />
+          </HBox.margin></Button>
+        <Button fx:id="btnBack" onAction="#handleBack" text="Zurück" />
+        <ComboBox fx:id="cbHistory" prefWidth="200" promptText="Verlauf" />
+        <Button fx:id="btnForward" onAction="#handleForward" prefWidth="52.8" text="Vor">
+          <HBox.margin>
+            <Insets right="20.0" />
+          </HBox.margin></Button>
+      </HBox>
+    </VBox>
+  </top>
+
+  <center>
+    <SplitPane dividerPositions="0.35">
+      <VBox spacing="10" style="-fx-padding: 6;">
+        <TitledPane collapsible="false" text="Synonyme">
+          <VBox spacing="6" style="-fx-padding: 6;">
+            <HBox spacing="6">
+              <Button fx:id="btnSynonymSearch" onAction="#handleSynonymSearch" text="Synonyme suchen" />
+              <Button fx:id="btnUseSynonym" onAction="#handleUseSynonym" text="Synonym übernehmen" />
+            </HBox>
+            <ListView fx:id="lvSynonyms" prefHeight="160" />
+            <Label fx:id="lblSynonymStatus" text="Synonyme: -" />
+          </VBox>
+        </TitledPane>
+
+        <TitledPane collapsible="false" text="Zettelkasten" VBox.vgrow="ALWAYS">
+          <VBox spacing="6" style="-fx-padding: 6;" VBox.vgrow="ALWAYS">
+            <ListView fx:id="lvTitles" VBox.vgrow="ALWAYS" />
+            <HBox spacing="6">
+              <Button fx:id="btnHinzufuegen" onAction="#handleHinzufuegen" text="Hinzufügen" />
+              <Button fx:id="btnSortieren" onAction="#handleSortieren" text="Sortieren" />
+              <Button fx:id="btnLoeschen" onAction="#handleLoeschen" text="Löschen" />
+            </HBox>
+            <HBox spacing="6">
+              <Button fx:id="btnLaden" onAction="#handleLaden" text="Laden" />
+              <Button fx:id="btnSpeichern" onAction="#handleSpeichern" text="Speichern" />
+              <Button fx:id="btnImport" onAction="#handleImport" text="Import" />
+              <Button fx:id="btnExport" onAction="#handleExport" text="Export" />
+            </HBox>
+          </VBox>
+        </TitledPane>
+      </VBox>
+
+      <WebView fx:id="browser" prefHeight="500" prefWidth="600" />
+    </SplitPane>
+  </center>
+
+  <bottom>
+    <HBox spacing="18" style="-fx-padding: 10; -fx-background-color: #f0f0f0;">
+      <Label fx:id="lblUrheber" text="Urheber: -" />
+      <Label fx:id="lblLetztesUpdate" text="Letzte Änderung: -" />
+      <Label fx:id="lblRegal" text="Regal: -" />
+      <Label fx:id="lblKapitelAnzahl" text="Anzahl Kapitel: -" />
+    </HBox>
+  </bottom>
+
+</BorderPane>
