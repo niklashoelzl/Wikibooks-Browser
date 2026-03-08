@@ -5,9 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>application</groupId>
-  <artifactId>Aufgabe4</artifactId>
+  <artifactId>wikibooks-browser</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Aufgabe 4</name>
+  <name>wikibooks-browser</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
