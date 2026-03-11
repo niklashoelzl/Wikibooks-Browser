@@ -17,7 +17,7 @@ jobs:
       - run: mvn package -DskipTests
       - run: |
           jpackage --input target/ `
-            --main-jar wikibooks-browser.jar `
+            --main-jar wikibooks-browser-1.0-SNAPSHOT.jar `
             --name "Wikibooks Browser" `
             --type exe `
             --win-shortcut `
@@ -38,7 +38,7 @@ jobs:
       - run: mvn package -DskipTests
       - run: |
           jpackage --input target/ \
-            --main-jar wikibooks-browser.jar \
+            --main-jar wikibooks-browser-1.0-SNAPSHOT.jar \
             --name "Wikibooks Browser" \
             --type dmg
       - uses: actions/upload-artifact@v4
@@ -57,7 +57,7 @@ jobs:
       - run: mvn package -DskipTests
       - run: |
           jpackage --input target/ \
-            --main-jar wikibooks-browser.jar \
+            --main-jar wikibooks-browser-1.0-SNAPSHOT.jar \
             --name "Wikibooks Browser" \
             --type deb
       - uses: actions/upload-artifact@v4
