@@ -14,6 +14,10 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+      - name: Download JavaFX SDK
+        run: |
+          curl -L https://download2.gluonhq.com/openjfx/21.0.6/openjfx-21.0.6_windows-x64_bin-sdk.zip -o javafx.zip
+          Expand-Archive javafx.zip -DestinationPath javafx-sdk
       - run: mvn package -DskipTests
       - run: |
           jpackage --input target/ `
@@ -21,7 +25,9 @@ jobs:
             --name "Wikibooks Browser" `
             --type exe `
             --win-shortcut `
-            --win-menu
+            --win-menu `
+            --module-path javafx-sdk/javafx-sdk-21.0.6/lib `
+            --add-modules javafx.controls,javafx.fxml,javafx.web
       - uses: actions/upload-artifact@v4
         with:
           name: windows-installer
@@ -35,12 +41,18 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+      - name: Download JavaFX SDK
+        run: |
+          curl -L https://download2.gluonhq.com/openjfx/21.0.6/openjfx-21.0.6_osx-x64_bin-sdk.zip -o javafx.zip
+          unzip javafx.zip -d javafx-sdk
       - run: mvn package -DskipTests
       - run: |
           jpackage --input target/ \
             --main-jar wikibooks-browser-1.0-SNAPSHOT.jar \
             --name "Wikibooks Browser" \
-            --type dmg
+            --type dmg \
+            --module-path javafx-sdk/javafx-sdk-21.0.6/lib \
+            --add-modules javafx.controls,javafx.fxml,javafx.web
       - uses: actions/upload-artifact@v4
         with:
           name: macos-installer
@@ -54,12 +66,18 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+      - name: Download JavaFX SDK
+        run: |
+          curl -L https://download2.gluonhq.com/openjfx/21.0.6/openjfx-21.0.6_linux-x64_bin-sdk.zip -o javafx.zip
+          unzip javafx.zip -d javafx-sdk
       - run: mvn package -DskipTests
       - run: |
           jpackage --input target/ \
             --main-jar wikibooks-browser-1.0-SNAPSHOT.jar \
             --name "Wikibooks Browser" \
-            --type deb
+            --type deb \
+            --module-path javafx-sdk/javafx-sdk-21.0.6/lib \
+            --add-modules javafx.controls,javafx.fxml,javafx.web
       - uses: actions/upload-artifact@v4
         with:
           name: linux-installer
