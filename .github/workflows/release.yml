@@ -28,23 +28,55 @@ jobs:
             --strip-debug `
             --no-header-files `
             --no-man-pages
-      - name: Build installer with jpackage
+      - name: Build app image with jpackage
         run: |
           jpackage --input target/ `
             --main-jar wikibooks-browser-1.0-SNAPSHOT.jar `
             --main-class application.wikibooks_browser.Launcher `
             --name "Wikibooks Browser" `
             --runtime-image custom-runtime `
-            --type exe `
-            --win-shortcut `
-            --win-menu `
-            --win-per-user-install `
-            --win-dir-chooser `
-            --about-url "https://github.com/niklashoelzl/Wikibooks-Browser"
+            --type app-image `
+            --dest app-image
+      - name: Install Inno Setup
+        run: choco install innosetup -y
+      - name: Create Inno Setup script
+        run: |
+          @"
+          [Setup]
+          AppName=Wikibooks Browser
+          AppVersion=1.0
+          AppPublisher=niklashoelzl
+          AppPublisherURL=https://github.com/niklashoelzl/Wikibooks-Browser
+          DefaultDirName={autopf}\Wikibooks Browser
+          DefaultGroupName=Wikibooks Browser
+          OutputBaseFilename=Wikibooks.Browser-1.0
+          Compression=lzma
+          SolidCompression=yes
+          WizardStyle=modern
+          PrivilegesRequired=lowest
+
+          [Tasks]
+          Name: "desktopicon"; Description: "Desktop Symbol hinzufügen"; GroupDescription: "Zusätzliche Optionen:"; Flags: checked
+          Name: "launchapp"; Description: "Wikibooks Browser direkt starten"; GroupDescription: "Zusätzliche Optionen:"; Flags: checked
+
+          [Files]
+          Source: "app-image\Wikibooks Browser\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+
+          [Icons]
+          Name: "{group}\Wikibooks Browser"; Filename: "{app}\Wikibooks Browser.exe"
+          Name: "{autodesktop}\Wikibooks Browser"; Filename: "{app}\Wikibooks Browser.exe"; Tasks: desktopicon
+
+          [Run]
+          Filename: "{app}\Wikibooks Browser.exe"; Tasks: launchapp; Flags: nowait postinstall skipifsilent; Description: "Wikibooks Browser starten"
+          "@ | Out-File -FilePath installer.iss -Encoding UTF8
+      - name: Build installer with Inno Setup
+        run: iscc installer.iss
+      - name: Move installer
+        run: Move-Item Output\Wikibooks.Browser-1.0.exe .
       - uses: actions/upload-artifact@v4
         with:
           name: windows-installer
-          path: "*.exe"
+          path: "Wikibooks.Browser-1.0.exe"
 
   build-macos:
     runs-on: macos-latest
@@ -112,6 +144,7 @@ jobs:
             --name "Wikibooks Browser" \
             --runtime-image custom-runtime \
             --type deb \
+            --linux-shortcut \
             --about-url "https://github.com/niklashoelzl/Wikibooks-Browser"
       - uses: actions/upload-artifact@v4
         with:
