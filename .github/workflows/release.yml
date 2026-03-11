@@ -23,7 +23,7 @@ jobs:
         run: |
           jlink `
             --module-path "javafx-jmods/javafx-jmods-21.0.6" `
-            --add-modules javafx.controls,javafx.fxml,javafx.web,javafx.media,java.base,java.desktop,java.logging,java.xml,java.naming,java.net.http `
+            --add-modules javafx.controls,javafx.fxml,javafx.web,javafx.media,java.base,java.desktop,java.logging,java.xml,java.naming,java.net.http,jdk.crypto.ec,jdk.crypto.cryptoki,java.security.jgss,jdk.localedata `
             --output custom-runtime `
             --strip-debug `
             --no-header-files `
@@ -37,7 +37,10 @@ jobs:
             --runtime-image custom-runtime `
             --type exe `
             --win-shortcut `
-            --win-menu
+            --win-menu `
+            --win-per-user-install `
+            --win-dir-chooser `
+            --about-url "https://github.com/niklashoelzl/Wikibooks-Browser"
       - uses: actions/upload-artifact@v4
         with:
           name: windows-installer
@@ -60,7 +63,7 @@ jobs:
         run: |
           jlink \
             --module-path "javafx-jmods/javafx-jmods-21.0.6" \
-            --add-modules javafx.controls,javafx.fxml,javafx.web,javafx.media,java.base,java.desktop,java.logging,java.xml,java.naming,java.net.http \
+            --add-modules javafx.controls,javafx.fxml,javafx.web,javafx.media,java.base,java.desktop,java.logging,java.xml,java.naming,java.net.http,jdk.crypto.ec,jdk.crypto.cryptoki,java.security.jgss,jdk.localedata \
             --output custom-runtime \
             --strip-debug \
             --no-header-files \
@@ -72,7 +75,8 @@ jobs:
             --main-class application.wikibooks_browser.Launcher \
             --name "Wikibooks Browser" \
             --runtime-image custom-runtime \
-            --type dmg
+            --type dmg \
+            --about-url "https://github.com/niklashoelzl/Wikibooks-Browser"
       - uses: actions/upload-artifact@v4
         with:
           name: macos-installer
@@ -95,7 +99,7 @@ jobs:
         run: |
           jlink \
             --module-path "javafx-jmods/javafx-jmods-21.0.6" \
-            --add-modules javafx.controls,javafx.fxml,javafx.web,javafx.media,java.base,java.desktop,java.logging,java.xml,java.naming,java.net.http \
+            --add-modules javafx.controls,javafx.fxml,javafx.web,javafx.media,java.base,java.desktop,java.logging,java.xml,java.naming,java.net.http,jdk.crypto.ec,jdk.crypto.cryptoki,java.security.jgss,jdk.localedata \
             --output custom-runtime \
             --strip-debug \
             --no-header-files \
@@ -107,7 +111,8 @@ jobs:
             --main-class application.wikibooks_browser.Launcher \
             --name "Wikibooks Browser" \
             --runtime-image custom-runtime \
-            --type deb
+            --type deb \
+            --about-url "https://github.com/niklashoelzl/Wikibooks-Browser"
       - uses: actions/upload-artifact@v4
         with:
           name: linux-installer
@@ -126,3 +131,4 @@ jobs:
             windows-installer/*.exe
             macos-installer/*.dmg
             linux-installer/*.deb
+            
