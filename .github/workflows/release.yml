@@ -28,8 +28,6 @@ jobs:
             --strip-debug `
             --no-header-files `
             --no-man-pages
-      - name: Install rcedit
-        run: choco install rcedit -y
       - name: Build app image with jpackage
         run: |
           jpackage --input target/ `
@@ -40,9 +38,6 @@ jobs:
             --icon src/main/resources/Images/icon.ico `
             --type app-image `
             --dest app-image
-      - name: Embed icon into exe
-        run: |
-          rcedit "app-image\Wikibooks Browser\Wikibooks Browser.exe" --set-icon src/main/resources/Images/icon.ico
       - name: Install Inno Setup
         run: choco install innosetup -y
       - name: Create Inno Setup script
@@ -68,10 +63,11 @@ jobs:
 
           [Files]
           Source: "app-image\Wikibooks Browser\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+          Source: "src\main\resources\Images\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
 
           [Icons]
-          Name: "{group}\Wikibooks Browser"; Filename: "{app}\Wikibooks Browser.exe"; IconFilename: "{app}\Wikibooks Browser.exe"
-          Name: "{autodesktop}\Wikibooks Browser"; Filename: "{app}\Wikibooks Browser.exe"; IconFilename: "{app}\Wikibooks Browser.exe"; Tasks: desktopicon
+          Name: "{group}\Wikibooks Browser"; Filename: "{app}\Wikibooks Browser.exe"; IconFilename: "{app}\icon.ico"
+          Name: "{autodesktop}\Wikibooks Browser"; Filename: "{app}\Wikibooks Browser.exe"; IconFilename: "{app}\icon.ico"; Tasks: desktopicon
 
           [Run]
           Filename: "{app}\Wikibooks Browser.exe"; Tasks: launchapp; Flags: nowait postinstall skipifsilent; Description: "Wikibooks Browser starten"
