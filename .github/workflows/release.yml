@@ -1,0 +1,78 @@
+name: Build Installers
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - run: mvn package -DskipTests
+      - run: |
+          jpackage --input target/ `
+            --main-jar wikibooks-browser.jar `
+            --name "Wikibooks Browser" `
+            --type exe `
+            --win-shortcut `
+            --win-menu
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: "*.exe"
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - run: mvn package -DskipTests
+      - run: |
+          jpackage --input target/ \
+            --main-jar wikibooks-browser.jar \
+            --name "Wikibooks Browser" \
+            --type dmg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-installer
+          path: "*.dmg"
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - run: mvn package -DskipTests
+      - run: |
+          jpackage --input target/ \
+            --main-jar wikibooks-browser.jar \
+            --name "Wikibooks Browser" \
+            --type deb
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-installer
+          path: "*.deb"
+
+  release:
+    needs: [build-windows, build-macos, build-linux]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            windows-installer/*.exe
+            macos-installer/*.dmg
+            linux-installer/*.deb
