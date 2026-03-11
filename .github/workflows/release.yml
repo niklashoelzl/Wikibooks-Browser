@@ -56,8 +56,8 @@ jobs:
           PrivilegesRequired=lowest
 
           [Tasks]
-          Name: "desktopicon"; Description: "Desktop Symbol hinzufügen"; GroupDescription: "Zusätzliche Optionen:"; Flags: checked
-          Name: "launchapp"; Description: "Wikibooks Browser direkt starten"; GroupDescription: "Zusätzliche Optionen:"; Flags: checked
+          Name: "desktopicon"; Description: "Desktop Symbol hinzufügen"; GroupDescription: "Zusätzliche Optionen:"
+          Name: "launchapp"; Description: "Wikibooks Browser direkt starten"; GroupDescription: "Zusätzliche Optionen:"
 
           [Files]
           Source: "app-image\Wikibooks Browser\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
@@ -164,4 +164,3 @@ jobs:
             windows-installer/*.exe
             macos-installer/*.dmg
             linux-installer/*.deb
-            
