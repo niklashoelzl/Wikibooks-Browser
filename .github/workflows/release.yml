@@ -169,3 +169,4 @@ jobs:
             windows-installer/*.exe
             macos-installer/*.dmg
             linux-installer/*.deb
+            
