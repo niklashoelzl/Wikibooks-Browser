@@ -35,7 +35,7 @@ jobs:
             --main-class application.wikibooks_browser.Launcher `
             --name "Wikibooks Browser" `
             --runtime-image custom-runtime `
-            --icon resources/Images/icon.ico `
+            --icon src/main/resources/Images/icon.ico `
             --type app-image `
             --dest app-image
       - name: Install Inno Setup
@@ -55,7 +55,7 @@ jobs:
           SolidCompression=yes
           WizardStyle=modern
           PrivilegesRequired=lowest
-          SetupIconFile=resources\Images\icon.ico
+          SetupIconFile=src\main\resources\Images\icon.ico
 
           [Tasks]
           Name: "desktopicon"; Description: "Desktop Symbol hinzufügen"; GroupDescription: "Zusätzliche Optionen:"
@@ -109,7 +109,7 @@ jobs:
             --main-class application.wikibooks_browser.Launcher \
             --name "Wikibooks Browser" \
             --runtime-image custom-runtime \
-            --icon resources/Images/icon.icns \
+            --icon src/main/resources/Images/icon.icns \
             --type dmg \
             --about-url "https://github.com/niklashoelzl/Wikibooks-Browser"
       - uses: actions/upload-artifact@v4
@@ -146,7 +146,7 @@ jobs:
             --main-class application.wikibooks_browser.Launcher \
             --name "Wikibooks Browser" \
             --runtime-image custom-runtime \
-            --icon resources/Images/icon.png \
+            --icon src/main/resources/Images/icon.png \
             --type deb \
             --linux-shortcut \
             --about-url "https://github.com/niklashoelzl/Wikibooks-Browser"
