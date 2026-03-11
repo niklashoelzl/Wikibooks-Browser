@@ -35,7 +35,7 @@ jobs:
             --main-class application.wikibooks_browser.Launcher `
             --name "Wikibooks Browser" `
             --runtime-image custom-runtime `
-            --icon src/main/resources/Images/icon.ico `
+            --icon src/main/resources/Images/WikibooksLogo.ico `
             --type app-image `
             --dest app-image
       - name: Install Inno Setup
@@ -55,7 +55,7 @@ jobs:
           SolidCompression=yes
           WizardStyle=modern
           PrivilegesRequired=lowest
-          SetupIconFile=src\main\resources\Images\icon.ico
+          SetupIconFile=src\main\resources\Images\WikibooksLogo.ico
 
           [Tasks]
           Name: "desktopicon"; Description: "Desktop Symbol hinzufügen"; GroupDescription: "Zusätzliche Optionen:"
@@ -63,11 +63,11 @@ jobs:
 
           [Files]
           Source: "app-image\Wikibooks Browser\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
-          Source: "src\main\resources\Images\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
+          Source: "src\main\resources\Images\WikibooksLogo.ico"; DestDir: "{app}"; Flags: ignoreversion
 
           [Icons]
-          Name: "{group}\Wikibooks Browser"; Filename: "{app}\Wikibooks Browser.exe"; IconFilename: "{app}\icon.ico"
-          Name: "{autodesktop}\Wikibooks Browser"; Filename: "{app}\Wikibooks Browser.exe"; IconFilename: "{app}\icon.ico"; Tasks: desktopicon
+          Name: "{group}\Wikibooks Browser"; Filename: "{app}\Wikibooks Browser.exe"; IconFilename: "{app}\WikibooksLogo.ico"
+          Name: "{autodesktop}\Wikibooks Browser"; Filename: "{app}\Wikibooks Browser.exe"; IconFilename: "{app}\WikibooksLogo.ico"; Tasks: desktopicon
 
           [Run]
           Filename: "{app}\Wikibooks Browser.exe"; Tasks: launchapp; Flags: nowait postinstall skipifsilent; Description: "Wikibooks Browser starten"
@@ -110,7 +110,7 @@ jobs:
             --main-class application.wikibooks_browser.Launcher \
             --name "Wikibooks Browser" \
             --runtime-image custom-runtime \
-            --icon src/main/resources/Images/icon.icns \
+            --icon src/main/resources/Images/WikibooksLogo.icns \
             --type dmg \
             --about-url "https://github.com/niklashoelzl/Wikibooks-Browser"
       - uses: actions/upload-artifact@v4
@@ -147,7 +147,7 @@ jobs:
             --main-class application.wikibooks_browser.Launcher \
             --name "Wikibooks Browser" \
             --runtime-image custom-runtime \
-            --icon src/main/resources/Images/icon.png \
+            --icon src/main/resources/Images/WikibooksLogo.png \
             --type deb \
             --linux-shortcut \
             --about-url "https://github.com/niklashoelzl/Wikibooks-Browser"
